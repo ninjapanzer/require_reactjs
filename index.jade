@@ -16,14 +16,98 @@ html(lang="en")
           +bigTitleSlide("RequireJS")
             p A problem to solve JIT
           +slide
-            //- File and Module Loader (app.js)
+            :markdown
+              ### File and Module Loader (app.js)
+
             include code/requirejs_config
+
           +slide
-            //- What does tue Usage look like
+            :markdown
+              ### What does tue Usage look like2
+
             include code/requirejs_usage
+
           +bigTitleSlide("CommonJS")
             p AOT...Kinda
 
+        +slideGroup
+          +bigTitleSlide("ReactJS")
+          +slide
+            :markdown
+              - is all about one-way data flow down the component hierarchy
+              - is UI oriented only
 
+          +slide
+            :markdown
+              ### What I like
+              - Oddly Simple - Low learning curve
+              - Works well with communication libraries
+              - Synthetic Events
+              - Shadow DOM
+
+            +speakerNotes
+              :markdown
+                - I Tackled this along with learning how to use RequireJS
+
+          +slide
+            :markdown
+              ### Its Ugly
+
+            include code/reactjs_ugly
+
+          +slide
+            :markdown
+              ### Strange component nesting
+              #### Also its major feature
+
+          +slide
+            :markdown
+              ## JSX = Syntactic Sugar for HTML
+
+            +speakerNotes
+              :markdown
+                - its like mustache and HTML had an ugly baby
+
+          +slide
+            :markdown
+              ### The JSX Transform
+
+            include code/jsx_before_and_after
+            +speakerNotes
+              :markdown
+                - The idea here is to make templating easy
+                - By removing the option of using templating languages
+
+        +slideGroup
+          +bigTitleSlide("The Problem")
+            ul
+              li Relying on JSX
+              li Seperating template from code
+              li Component Resuse
+          +slide
+            :markdown
+              ## Don't use JSX Runtime
+              ### Thanks Grunt and Gulp
+
+            include code/grunt_jsx
+
+          +slide
+            :markdown
+              ## AMD for Templates
+
+            include code/jsx_template_extraction
+
+          +slide
+            :markdown
+              ## Resuse
+              ### Haven't Gotten There Yet
+
+        +bigTitleSlide("Fear of Angular")
+
+        +slide
+          :markdown
+            ## Resources
+            - [__Campaign Manager__ - https://github.com/ninjapanzer/campaign_manager](https://github.com/ninjapanzer/campaign_manager)
+            - [__Thinking in ReactJS__ - http://facebook.github.io/react/docs/thinking-in-react.html](http://facebook.github.io/react/docs/thinking-in-react.html)
 
     include bower_components/RevealJade/shared/footer
