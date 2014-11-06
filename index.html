@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Agile Development with Github</title>
+    <meta name="description" content="">
+    <meta name="author" content="Paul Scarrone">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.min.css">
+    <link id="theme" rel="stylesheet" href="bower_components/reveal.js/css/theme/moon.css">
+    <link rel="stylesheet" href="css/slides.css">
+    <!-- For syntax highlighting-->
+    <link rel="stylesheet" href="bower_components/reveal.js/lib/css/zenburn.css">
+    <script src="//localhost:35729/livereload.js"></script>
+    <script>var revealLocation = 'bower_components/reveal.js/'</script>
+    <!--if lt IE 9
+    script(src= revealLocation + 'lib/js/html5shiv.js')
+    
+    -->
+    <script type="text/javascript">document.write( '<link rel="stylesheet" href="' + revealLocation + 'css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );</script>
+  </head>
+  <link rel="external" type="text/html" src="bower_components/RevealJade/shared/head.jade">
+  <body>
+    <div class="reveal">
+      <div class="slides">
+            <section>
+              <h1>RequireJs and ReactJS
+              </h1>
+              <h3>Cause Angular Scares me
+              </h3>
+              <p>
+                <div class="left"><small>Paul Scarrone</small></div>
+                <div class="left"><small class="twitter">@PaulSCoder</small></div>
+                <div class="left"><small class="email">paul.scarrone@gmail.com</small></div>
+              </p>
+              <aside class="notes">Title Slide</aside>
+            </section>
+            <section>
+                  <section>
+                    <h1>RequireJS</h1>
+                    <p>A problem to solve JIT</p>
+                  </section>
+                <section><h3 id="file-and-module-loader-app-js-">File and Module Loader (app.js)</h3>
+<h6 id="code">Code</h6>
+<pre><code>requirejs.config({
+  &quot;baseUrl&quot; : &quot;&quot;,
+  &quot;paths&quot;   : {
+    &quot;domready&quot;      : &quot;components/domready/ready.min&quot;,
+    &quot;underscore&quot;    : &quot;components/underscore/underscore-min&quot;,
+    &quot;react&quot;         : &quot;components/react/react&quot;,
+    &quot;jquery&quot;        : &quot;components/jquery/dist/jquery.min&quot;
+  },
+  &quot;shim&quot;: {
+    &quot;jquery&quot;: {
+      &quot;exports&quot;: &#39;$&#39;
+    },
+  }
+});
+requirejs([&#39;js/main&#39;, &#39;js/components/campaignEdit&#39;]);
+</code></pre>
+                </section>
+                <section><h3 id="what-does-tue-usage-look-like2">What does tue Usage look like2</h3>
+<h6 id="code">Code</h6>
+<pre><code>define([&#39;react&#39;, &#39;jquery&#39;], function(React, $){
+
+  var exports = {
+    ...
+  };
+
+  return exports;
+});
+</code></pre>
+                </section>
+                  <section>
+                    <h1>CommonJS</h1>
+                    <p>AOT...Kinda</p>
+                  </section>
+            </section>
+            <section>
+                  <section>
+                    <h1>ReactJS</h1>
+                  </section>
+                <section><ul>
+<li>is all about one-way data flow down the component hierarchy</li>
+<li>is UI oriented only</li>
+</ul>
+
+                </section>
+                <section><h3 id="what-i-like">What I like</h3>
+<ul>
+<li>Oddly Simple - Low learning curve</li>
+<li>Works well with communication libraries</li>
+<li>Synthetic Events</li>
+<li>Shadow DOM</li>
+</ul>
+
+                    <aside class="notes"><ul>
+<li>I Tackled this along with learning how to use RequireJS</li>
+</ul>
+
+                    </aside>
+                </section>
+                <section><h3 id="its-ugly">Its Ugly</h3>
+<h6 id="code">Code</h6>
+<pre><code>var LikeButton = React.createClass({
+  render: function() {
+    var text = this.state.liked ? &#39;like&#39; : &#39;haven\&#39;t liked&#39;;
+    return (
+      &lt;p onClick={this.handleClick}&gt;
+        You {text} this. Click to toggle.
+      &lt;/p&gt;
+    );
+  }
+});
+React.render(
+  &lt;LikeButton /&gt;,
+  document.getElementById(&#39;example&#39;)
+);
+</code></pre>
+                </section>
+                <section><h3 id="strange-component-nesting">Strange component nesting</h3>
+<h4 id="also-its-major-feature">Also its major feature</h4>
+
+                </section>
+                <section><h2 id="jsx-syntactic-sugar-for-html">JSX = Syntactic Sugar for HTML</h2>
+
+                    <aside class="notes"><ul>
+<li>its like mustache and HTML had an ugly baby</li>
+</ul>
+
+                    </aside>
+                </section>
+                <section><h3 id="the-jsx-transform">The JSX Transform</h3>
+<h6 id="before">Before</h6>
+<pre><code>&lt;div styleClass=&quot;label&quot;&gt;
+    &lt;textarea rows=&quot;50&quot; cols=&quot;100&quot;
+      value={value}
+      defaultValue={value}
+      onFocus={this.handleFocus}
+      onBlur={this.handleBlur}
+      onChange={this.handleChange}/&gt;
+&lt;/div&gt;
+</code></pre><h6 id="after">After</h6>
+<pre><code>React.DOM.div({styleClass: &quot;label&quot;},
+  React.DOM.textarea({rows: &quot;50&quot;, cols: &quot;100&quot;,
+    value: value,
+    defaultValue: value,
+    onFocus: this.handleFocus,
+    onBlur: this.handleBlur,
+    onChange: this.handleChange})
+)
+</code></pre>
+                    <aside class="notes"><ul>
+<li>The idea here is to make templating easy</li>
+<li>By removing the option of using templating languages</li>
+</ul>
+
+                    </aside>
+                </section>
+            </section>
+            <section>
+                  <section>
+                    <h1>The Problem</h1>
+                    <ul>
+                      <li>Relying on JSX</li>
+                      <li>Seperating template from code</li>
+                      <li>Component Resuse</li>
+                    </ul>
+                  </section>
+                <section><h2 id="don-t-use-jsx-runtime">Don&#39;t use JSX Runtime</h2>
+<h3 id="thanks-grunt-and-gulp">Thanks Grunt and Gulp</h3>
+<h6 id="code">Code</h6>
+<pre><code>module.exports = function(grunt) {
+  grunt.loadNpmTasks(&#39;grunt-react&#39;);
+  grunt.config.set(&#39;react&#39;, {
+    dynamic_mappings: {
+      files: [
+        {
+          expand: true,
+          cwd: &#39;.tmp/public/js&#39;,
+          src: [&#39;**/*.jsx&#39;],
+          dest: &#39;.tmp/public/js&#39;,
+          ext: &#39;.js&#39;
+        }
+      ]
+    }
+  });
+};
+</code></pre>
+                </section>
+                <section><h2 id="amd-for-templates">AMD for Templates</h2>
+<h6 id="component">Component</h6>
+<pre><code>var textBox = function(){
+  React.renderComponent(
+    TextBoxComponent(),
+    $(&#39;#editing&#39;)[0]
+  );};
+var TextBoxComponent = React.createClass({
+  render: function() {
+    return CampaignEditBox.call(this);
+  }});
+</code></pre><h6 id="template">Template</h6>
+<pre><code>/** @jsx React.DOM */
+define([&#39;react&#39;], function(React) {
+  var exports = {
+    editBox: function (){
+      var value = this.state.value;
+      return(
+        &lt;div styleClass=&quot;label&quot;&gt;
+          ...
+        &lt;/div&gt;
+      )}};
+  return exports.editBox;
+});
+</code></pre>
+                </section>
+                <section><h2 id="resuse">Resuse</h2>
+<h3 id="haven-t-gotten-there-yet">Haven&#39;t Gotten There Yet</h3>
+
+                </section>
+            </section>
+            <section>
+              <h1>Fear of Angular</h1>
+            </section>
+          <section><h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://github.com/ninjapanzer/campaign_manager"><strong>Campaign Manager</strong> - https://github.com/ninjapanzer/campaign_manager</a></li>
+<li><a href="http://facebook.github.io/react/docs/thinking-in-react.html"><strong>Thinking in ReactJS</strong> - http://facebook.github.io/react/docs/thinking-in-react.html</a></li>
+</ul>
+
+          </section>
+      </div>
+    </div>
+    <script type="text/javascript" src="bower_components/reveal.js/lib/js/head.min.js"></script>
+    <script type="text/javascript" src="bower_components/reveal.js/js/reveal.js"></script>
+    <script>
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+       Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        theme: 'moon',
+        slideNumber: true,
+        transition: 'concave',
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: revealLocation + 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: revealLocation + 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: revealLocation + 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: revealLocation + 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: revealLocation + 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+       });
+    </script>
+  </body>
+</html>
